@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const TimeLogSchema = new mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
-  taskId: mongoose.Schema.Types.ObjectId,
-  startTime: Date,
-  endTime: Date,
-  duration: Number
-});
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
+    startTime: { type: Date, required: true },
+    endTime: { type: Date, required: true },
+    duration: { type: Number, required: true }
+}, { timestamps: true });
 
-module.exports = mongoose.model("TimeLog", TimeLogSchema);
+export default mongoose.model('TimeLog', TimeLogSchema);

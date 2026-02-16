@@ -1,8 +1,9 @@
-const router = require("express").Router();
-const auth = require("../middleware/authMiddleware");
-const { startTime, stopTime } = require("../controllers/timeController");
+import express from 'express';
+const router = express.Router();
+import { logTime, getUserLogs } from '../controllers/timeController.js';
+import auth from '../middleware/authMiddleware.js';
 
-router.post("/start", auth, startTime);
-router.post("/stop/:id", auth, stopTime);
+router.post('/log', auth, logTime);
+router.get('/logs/:userId', auth, getUserLogs);
 
-module.exports = router;
+export default router;

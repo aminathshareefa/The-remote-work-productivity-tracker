@@ -1,18 +1,27 @@
-const TimeLog = require("../models/TimeLog");
+import TimeLog from '../models/TimeLog.js';
 
-exports.startTime = async (req, res) => {
-  const log = await TimeLog.create({
-    userId: req.user.id,
-    taskId: req.body.taskId,
-    startTime: new Date()
-  });
-  res.json(log);
+export const logTime = async (req, res) => {
+    try {
+        const { userId, taskId, startTime, endTime, duration } = req.body;
+        const newLog = new TimeLog({
+            user: userId,
+            task: taskId,
+            startTime,
+            endTime,
+            duration
+        });
+        await newLog.save();
+        res.status(201).json(newLog);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
 };
 
-exports.stopTime = async (req, res) => {
-  const log = await TimeLog.findById(req.params.id);
-  log.endTime = new Date();
-  log.duration = (log.endTime - log.startTime) / 1000;
-  await log.save();
-  res.json(log);
+export const getUserLogs = async (req, res) => {
+    try {
+        const logs = await TimeLog.find({ user: req.params.userId }).populate('task');
+        res.json(logs);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 };

@@ -1,35 +1,51 @@
-export default function Register() {
-  return (
-    <div className="flex justify-center mt-10">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-96">
-        <h2 className="text-xl font-semibold mb-4 text-center">
-          Register
-        </h2>
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import API from '../services/api';
 
-        <input
-          type="text"
-          placeholder="Name"
-          className="w-full border px-3 py-2 mb-3 rounded"
-        />
+const Register = () => {
+    const [formData, setFormData] = useState({ name: "", email: "", password: "", role: "Employee" });
+    const navigate = useNavigate();
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border px-3 py-2 mb-3 rounded"
-        />
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await API.post('/auth/register', formData);
+            alert("Registration successful! You can now log in.");
+            navigate('/login');
+        } catch (err) {
+            alert("Registration failed. Try a different email.");
+        }
+    };
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border px-3 py-2 mb-4 rounded"
-        />
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 font-sans">
+            <div className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md">
+                <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Create Account</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <input type="text" placeholder="Full Name" className="w-full p-3 border rounded-lg" 
+                    onChange={e => setFormData({...formData, name: e.target.value})} required />
+                    
+                    <input type="email" placeholder="Email" className="w-full p-3 border rounded-lg" 
+                    onChange={e => setFormData({...formData, email: e.target.value})} required />
+                    
+                    <input type="password" placeholder="Password" className="w-full p-3 border rounded-lg" 
+                    onChange={e => setFormData({...formData, password: e.target.value})} required />
+                    
+                    <select className="w-full p-3 border rounded-lg bg-white" 
+                    onChange={e => setFormData({...formData, role: e.target.value})}>
+                        <option value="Employee">Employee</option>
+                        <option value="Manager">Manager</option>
+                    </select>
 
-        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-          Register
-        </button>
-      </div>
-    </div>
-  );
-}
+                    <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition">Sign Up</button>
+                </form>
+                
+                <p className="text-center mt-6 text-gray-600">
+                    Already have an account? <Link to="/login" className="text-blue-600 font-bold hover:underline">Sign In</Link>
+                </p>
+            </div>
+        </div>
+    );
+};
 
-
+export default Register;

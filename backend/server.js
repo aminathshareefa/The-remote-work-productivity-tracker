@@ -1,28 +1,32 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import cors from "cors";
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import connectDB from './config/db.js';
 
-import authRoutes from "./routes/authRoutes.js";
-import taskRoutes from "./routes/taskRoutes.js";
-
-dotenv.config();
+// Import Routes
+import authRoutes from './routes/authRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import employeeRoutes from './routes/employeeRoutes.js';
+import managerRoutes from './routes/managerRoutes.js';
+import timeRoutes from './routes/timeRoutes.js';
 
 const app = express();
+
+// Connect Database
+connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/tasks", taskRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/employee', employeeRoutes);
+app.use('/api/manager', managerRoutes);
+app.use('/api/time', timeRoutes);
 
-// MongoDB Connection
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB Connected");
-    app.listen(5000, () => console.log("Server running on port 5000"));
-  })
-  .catch((err) => console.log(err));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

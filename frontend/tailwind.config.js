@@ -5,8 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'tracker-blue': '#2563eb',
+      }
+    },
   },
   plugins: [],
 }
-
