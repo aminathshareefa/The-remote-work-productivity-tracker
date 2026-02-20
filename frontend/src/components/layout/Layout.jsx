@@ -4,12 +4,14 @@ import Sidebar from './Sidebar';
 
 const Layout = () => {
     return (
-        <div className="flex bg-gray-100 min-h-screen">
+        <div className="flex min-h-screen bg-gray-100">
+            {/* The Sidebar remains fixed on the left for all logged-in users */}
             <Sidebar />
-            <div className="flex-1 p-8">
-                {/* This renders the specific page content */}
+            
+            {/* The Main Content area changes based on the route */}
+            <main className="flex-1 overflow-y-auto">
                 <Outlet />
-            </div>
+            </main>
         </div>
     );
 };
