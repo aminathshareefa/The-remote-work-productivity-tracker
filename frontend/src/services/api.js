@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5000/api' });
+const API = axios.create({ baseURL: 'https://the-remote-work-productivity-tracker.onrender.com' });
 
 // Automatically attach Auth Token to every request
 API.interceptors.request.use((req) => {
