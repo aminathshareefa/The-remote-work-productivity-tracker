@@ -10,20 +10,28 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(""); // Clear previous errors
+        setError(""); 
+
         try {
+            
             const res = await API.post('/auth/login', { email, password });
+            
+            
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
             
-            // Redirect based on role defined in your SRS
-            if (res.data.user.role === 'Admin') navigate('/admin');
-            else if (res.data.user.role === 'Manager') navigate('/manager');
-            else navigate('/employee');
+            const userRole = res.data.user.role;
+            if (userRole === 'Admin') {
+                navigate('/admin');
+            } else if (userRole === 'Manager') {
+                navigate('/manager');
+            } else {
+                navigate('/employee');
+            }
             
             window.location.reload(); 
         } catch (err) {
-            setError(err.response?.data?.message || "Login Failed! Check your credentials or Backend connection.");
+            setError(err.response?.data?.message || "Login Failed! Check credentials or Backend.");
         }
     };
 
@@ -32,20 +40,33 @@ const Login = () => {
             <div className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md">
                 <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Login to Tracker</h2>
                 
+                {/* എറർ ഉണ്ടെങ്കിൽ ഇവിടെ പ്രദർശിപ്പിക്കും */}
                 {error && <p className="bg-red-100 text-red-600 p-3 rounded mb-4 text-sm">{error}</p>}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" placeholder="myuser@gmail.com" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
-                        onChange={e => setEmail(e.target.value)} required />
+                        <input 
+                            type="email" 
+                            placeholder="myuser@gmail.com" 
+                            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
+                            onChange={e => setEmail(e.target.value)} 
+                            required 
+                        />
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" placeholder="••••••" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
-                        onChange={e => setPassword(e.target.value)} required />
+                        <input 
+                            type="password" 
+                            placeholder="••••••" 
+                            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
+                            onChange={e => setPassword(e.target.value)} 
+                            required 
+                        />
                     </div>
-                    <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition">Login</button>
+                    <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition">
+                        Login
+                    </button>
                 </form>
                 
                 <p className="text-center mt-6 text-gray-600">
