@@ -15,6 +15,9 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.get('/', (req, res) => {
+    res.send("<h1>Remote Work Productivity Tracker API is Live!</h1><p>The backend is working perfectly.</p>");
+});
 
 app.use(cors({
     origin: "*", 
