@@ -23,7 +23,6 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
@@ -34,8 +33,8 @@ const connectDB = async () => {
 };
 connectDB();
 
-app.get('/', (req, res) => {
-    res.send("Remote Work Productivity Tracker API is running...");
+app.get('/api', (req, res) => {
+    res.json({ message: "Remote Work Productivity Tracker API is running..." });
 });
 
 app.use('/api/auth', authRoutes);
