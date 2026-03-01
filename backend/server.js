@@ -17,13 +17,10 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-    origin: [
-        "https://productivity-tracker-five.vercel.app", 
-        "https://productivity-tracker-git-main-aminathshareefas-projects.vercel.app",
-        "http://localhost:5173"
-    ], 
+    origin: "*", 
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], 
-    credentials: true
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 
