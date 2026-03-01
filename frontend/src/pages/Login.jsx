@@ -14,7 +14,7 @@ const Login = () => {
 
         try {
             
-            const res = await API.post('/api/auth/login', { email, password });
+            const res = await API.post('/auth/login', { email, password });
             
             
             localStorage.setItem('token', res.data.token);
@@ -40,7 +40,7 @@ const Login = () => {
             <div className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md">
                 <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Login to Tracker</h2>
                 
-                {/* എറർ ഉണ്ടെങ്കിൽ ഇവിടെ പ്രദർശിപ്പിക്കും */}
+                {}
                 {error && <p className="bg-red-100 text-red-600 p-3 rounded mb-4 text-sm">{error}</p>}
 
                 <form onSubmit={handleSubmit} className="space-y-4">

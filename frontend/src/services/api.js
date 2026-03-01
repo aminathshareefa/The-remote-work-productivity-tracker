@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({ 
-    baseURL: 'https://the-remote-work-productivity-tracker.onrender.com/' 
+    baseURL: 'https://the-remote-work-productivity-tracker.onrender.com/api' 
 });
 
 API.interceptors.request.use((req) => {
