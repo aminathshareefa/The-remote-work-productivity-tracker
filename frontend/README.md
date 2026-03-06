@@ -1,16 +1,34 @@
-# React + Vite
+Remote Work Productivity Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack MERN application designed to help managers assign tasks to employees and track team progress in real-time.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Recent Bug Fixes
 
-## React Compiler
+Auth Fix: Resolved a double-hashing conflict in authController.js to ensure login works perfectly.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Route Fix: Corrected the /api/employees/list 404 error by properly mounting routes in server.js.
 
-## Expanding the ESLint configuration
+Dashboard Fix: Fixed the 500 error on the Manager Dashboard and updated filtering logic to display approved employees correctly.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+🛠️ Tech Stack
+
+Frontend: React.js, Tailwind CSS, Axios
+
+Backend: Node.js, Express.js
+
+Database: MongoDB Atlas
+
+Authentication: JSON Web Tokens (JWT) & Bcrypt.js
+
+
+📋 Features
+
+Role-based Access: Separate dashboards for Managers and Employees.
+
+Task Assignment: Managers can assign tasks to specific approved employees.
+
+Real-time Status: Track task completion status from 'Pending' to 'Completed'.
+
+Secure Login: Encrypted passwords and protected API routes.
