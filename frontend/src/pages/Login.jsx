@@ -48,7 +48,7 @@ const Login = () => {
                         <label className="block text-sm font-medium text-gray-700">Email Address</label>
                         <input 
                             type="email" 
-                            placeholder="myuser@gmail.com" 
+                            placeholder="user@gmail.com" 
                             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
                             onChange={e => setEmail(e.target.value)} 
                             required 

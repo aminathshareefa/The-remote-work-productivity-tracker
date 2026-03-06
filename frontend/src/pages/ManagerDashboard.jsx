@@ -15,20 +15,32 @@ const ManagerDashboard = () => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [taskRes, userRes] = await Promise.all([
+
+            // retrieve manager's team progress and employee list with JWT token
+            const [taskRes, empRes] = await Promise.all([
                 API.get('/manager/team-progress'),
-                API.get('/admin/users') 
+                API.get('/employees/list')
             ]);
-            
+
+            console.log("Employee response data:", empRes.data);
+
+            // Log each employee's role and approval status for debugging
+            empRes.data.forEach(u => console.log(`User: ${u.name}, Role: ${u.role}, isApproved: ${u.isApproved}`));
+
             setTasks(taskRes.data);
 
-            const approvedEmployees = userRes.data.filter(
-                u => u.role === 'Employee' && u.isApproved === true
+            // filter approved employees (case-insensitive role check)
+            const approvedEmployees = empRes.data.filter(
+                u => u.role.toLowerCase() === 'employee' && u.isApproved === true
             );
+            console.log("Approved employees:", approvedEmployees);
             setEmployees(approvedEmployees);
             setLoading(false);
         } catch (err) {
             console.error("Data fetch failed", err);
+            if (err.response?.data) {
+                console.error("Backend error response:", err.response.data);
+            }
             setLoading(false);
         }
     };

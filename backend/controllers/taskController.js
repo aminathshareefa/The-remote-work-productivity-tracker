@@ -2,7 +2,10 @@ import Task from '../models/Task.js';
 
 export const createTask = async (req, res) => {
     try {
-        const newTask = new Task(req.body);
+        const newTask = new Task({
+            ...req.body,
+            assignedBy: req.user.id
+        });
         const savedTask = await newTask.save();
         res.status(201).json(savedTask);
     } catch (err) {

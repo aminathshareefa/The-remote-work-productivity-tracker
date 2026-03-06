@@ -8,4 +8,4 @@ const TimeLogSchema = new mongoose.Schema({
     duration: { type: Number, required: true }
 }, { timestamps: true });
 
-export default mongoose.model('TimeLog', TimeLogSchema);
+export default mongoose.models.TimeLog || mongoose.model('TimeLog', TimeLogSchema);

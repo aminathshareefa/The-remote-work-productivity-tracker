@@ -43,7 +43,7 @@ app.get('/api', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/employee', employeeRoutes);
+app.use('/api/employees', employeeRoutes);
 app.use('/api/manager', managerRoutes);
 app.use('/api/time', timeRoutes);
 
