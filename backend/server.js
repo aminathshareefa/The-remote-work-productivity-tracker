@@ -25,18 +25,8 @@ requiredEnvVars.forEach(varName => {
 const app = express();
 
 // Middleware
+app.use(cors()); // Allow all origins temporarily
 app.use(express.json());
-
-// CORS configuration - must be before route definitions
-app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://the-remote-work-productivi-git-76e773-aminathshareefas-projects.vercel.app"
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], 
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
 
 // Health check route
 app.get('/', (req, res) => {
