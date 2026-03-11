@@ -15,16 +15,18 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.get('/', (req, res) => {
-    res.send("<h1>Remote Work Productivity Tracker API is Live!</h1><p>The backend is working perfectly.</p>");
-});
 
+// CORS configuration - must be before route definitions
 app.use(cors({
-    origin: "*", 
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], 
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+app.get('/', (req, res) => {
+    res.send("<h1>Remote Work Productivity Tracker API is Live!</h1><p>The backend is working perfectly.</p>");
+});
 
 const connectDB = async () => {
     try {

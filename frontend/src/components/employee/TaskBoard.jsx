@@ -22,6 +22,7 @@ const TaskBoard = () => {
             await API.patch(`/tasks/${taskId}`, { status: newStatus });
             setTasks(tasks.map(t => t._id === taskId ? { ...t, status: newStatus } : t));
         } catch (err) {
+            console.error(err);
             alert("Could not update task");
         }
     };

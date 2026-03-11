@@ -12,7 +12,10 @@ const SignUp = () => {
             await API.post('/auth/register', formData);
             alert("Registration Successful! Please Login.");
             navigate('/login');
-        } catch (err) { alert("Registration failed. Email might already exist."); }
+        } catch (err) {
+            console.error(err);
+            alert("Registration failed. Email might already exist.");
+        }
     };
 
     return (

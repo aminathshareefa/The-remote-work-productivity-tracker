@@ -22,6 +22,7 @@ const AdminDashboard = () => {
             // Refresh the list to show updated status
             setUsers(users.map(u => u._id === userId ? { ...u, isApproved: !u.isApproved } : u));
         } catch (err) {
+            console.error(err);
             alert("Approval failed. Check backend routes.");
         }
     };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import API from '../services/api';
 
 const ManagerDashboard = () => {
@@ -12,7 +12,7 @@ const ManagerDashboard = () => {
     });
     const [loading, setLoading] = useState(true);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             setLoading(true);
 
@@ -22,6 +22,7 @@ const ManagerDashboard = () => {
                 API.get('/employees/list')
             ]);
 
+            console.log("Task response data:", taskRes.data);
             console.log("Employee response data:", empRes.data);
 
             // Log each employee's role and approval status for debugging
@@ -43,11 +44,11 @@ const ManagerDashboard = () => {
             }
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
     const handleCreateTask = async (e) => {
         e.preventDefault();
@@ -59,6 +60,7 @@ const ManagerDashboard = () => {
             fetchData(); 
             alert("Task assigned successfully!");
         } catch (err) {
+            console.error(err);
             alert("Error assigning task.");
         }
     };
@@ -138,15 +140,22 @@ const ManagerDashboard = () => {
                             <tr>
                                 <th className="p-4 text-gray-600">Task</th>
                                 <th className="p-4 text-gray-600">Assigned To</th>
+                                <th className="p-4 text-gray-600">Weekly Hours</th>
                                 <th className="p-4 text-gray-600">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             {tasks.length > 0 ? tasks.map(task => (
-                                <tr key={task._id} className="border-b hover:bg-gray-50">
+                                <tr key={task.title} className="border-b hover:bg-gray-50">
                                     <td className="p-4 font-medium">{task.title}</td>
                                     <td className="p-4 text-blue-700">
-                                        {task.assignedTo?.name || "Unassigned"}
+                                        {task.name}
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="text-sm font-medium font-bold">{(task.totalLoggedHours || 0).toFixed(1)} hrs</div>
+                                        <div className="w-full bg-gray-200 rounded-full h-3 mt-1">
+                                            <div className="bg-blue-400 h-3 rounded-full" style={{width: `${Math.min((task.totalLoggedHours || 0) / 40 * 100, 100)}%`}}></div>
+                                        </div>
                                     </td>
                                     <td className="p-4">
                                         <span className={`px-2 py-1 rounded text-xs font-bold ${
@@ -158,7 +167,7 @@ const ManagerDashboard = () => {
                                 </tr>
                             )) : (
                                 <tr>
-                                    <td colSpan="3" className="p-10 text-center text-gray-400">No tasks found. Assign some above!</td>
+                                    <td colSpan="4" className="p-10 text-center text-gray-400">No tasks found. Assign some above!</td>
                                 </tr>
                             )}
                         </tbody>
